@@ -40,7 +40,7 @@
     <div class="card">
         <h1 style="font-size: 1.8rem; margin-bottom: 20px;">이름을 입력해 주세요!</h1>
         <input type="text" id="user-name-input" style="width:80%; padding:15px; font-size:1.2rem; border-radius:15px; border:2px solid #ddd; font-family:'Jua'; text-align:center;" placeholder="이름 입력"><br><br>
-        <button class="btn-action" style="font-size: 1.3rem; padding: 15px 40px;" onclick="handleLogin()">시작하기</button>
+        <button class="btn-action" style="font-size: 1.3rem; padding: 15px 40px;" onclick="handleLogin()">학습 시작하기</button>
     </div>
 </div>
 
@@ -77,7 +77,7 @@
 
             <h3 class="section-title">③ 퀴즈 풀기</h3>
             <div id="quiz-content"></div> <br>
-            <button class="btn-action" style="background:#FF9800; width:100%;" onclick="saveToCollection()">이 단어 저장하기 🎒</button>
+            <button class="btn-action" style="background:#FF9800; width:100%;" onclick="saveToCollection()">오늘의 단어 저장! 🎒</button>
         </div>
     </div>
 
@@ -85,7 +85,7 @@
         <div class="card">
             <h2>✍️ 직접 써보기</h2>
             <div id="target-draw" class="char-box" style="width:240px; height:240px; margin: auto;"></div>
-            <p id="quiz-guide" style="font-size:1.2rem; color:var(--primary); margin: 20px 0;">아래 버튼을 눌러보세요.</p>
+            <p id="quiz-guide" style="font-size:1.2rem; color:var(--primary); margin: 20px 0;">글자를 선택해 주세요.</p>
             <div id="draw-buttons"></div>
         </div>
     </div>
@@ -99,11 +99,11 @@
 </div>
 
 <script>
-    // 1. 데이터 완전 보정 (한글 섞임 방지)
+    // 1. 데이터 완전 교정 (한글 섞임 방지)
     const rawData = [
         "一日,일일,하루", "二月,이월,2월", "三月,삼월,3월", "四方,사방,네 방향", "五月,오월,5월", "六月,유월,6월", "七日,칠일,7일 동안", "八方,팔방,모든 방향", "九十,구십,90", "十月,시월,10월",
         "百人,백인,백 명의 사람", "千金,천금,많은 돈", "萬一,만일,만약에", "山川,산천,산과 시내", "江山,강산,강과 산", "火山,화산,불 뿜는 산", "石山,석산,돌산", "土木,토목,흙과 나무", "木手,목수,나무 다루는 사람", "生子,생자,아들을 낳음",
-        "水力,수력,물의 힘", "火力,화력,불의 힘", "大力,대력,큰 힘", "水車,수차,물레방아", "日月,일월,해와 달", "平日,평일,보통 때의 날", "休日,휴일,쉬는 날", "月出,월출,달이 뜸", "大小,대소,크고 작음", "上下,상하,위와 아래",
+        "水力,수력,물의 힘", "火力,화력,불의 힘", "大力,대력,큰 힘", "수차,수차,물레방아", "日月,일월,해와 달", "平日,평일,보통 때의 날", "休日,휴일,쉬는 날", "月出,월출,달이 뜸", "大小,대소,크고 작음", "上下,상하,위와 아래",
         "左右,좌우,왼쪽과 오른쪽", "東西,동서,동쪽과 서쪽", "南北,남북,남쪽과 북쪽", "長短,장단,길고 짧음", "多少,다소,많고 적음", "高低,고저,높고 낮음", "內外,내외,안과 밖", "前後,전후,앞과 뒤", "中間,중간,사이", "中央,중앙,한가운데",
         "天地,천지,하늘과 땅", "天下,천하,온 세상", "白手,백수,빈손", "白米,백미,흰 쌀", "赤土,적토,붉은 흙", "金石,금석,쇠와 돌", "中年,중년,중년", "少年,소년,젊은이", "今年,금년,올해", "半年,반년,반년",
         "人口,인구,사람의 수", "主人,주인,물건의 임자", "本人,본인,자기 자신", "夫人,부인,남의 아내", "名手,명수,솜씨 좋은 사람", "手足,수족,손과 발", "入口,입구,들어가는 곳", "出口,출구,나가는 곳", "入山,입산,산에 들어감", "下山,하산,산에서 내려옴",
@@ -113,14 +113,14 @@
         "名人,명인,이름난 사람", "老人,노인,늙은 사람", "長男,장남,첫째 아들", "長女,장녀,첫째 딸", "子息,자식,아들과 딸", "分分,분분,여럿으로 나뉨", "正月,정월,첫째 달", "正直,정직,바르고 곧음", "安心,안심,마음을 편히 함", "一心,일심,한마음"
     ];
 
-    // 2. 한자 사전 보완 (누락된 '月', '六' 등 필수 데이터 추가)
+    // 2. 한자 사전 완전 보완 ('月' 등 누락 데이터 추가)
     const hanjaDic = {
         "一": "한 일", "二": "두 이", "三": "석 삼", "四": "넉 사", "五": "다섯 오", "六": "여섯 륙", "七": "일곱 칠", "八": "여덟 팔", "九": "아홉 구", "十": "열 십",
         "百": "일백 백", "千": "일천 천", "萬": "일만 만", "人": "사람 인", "金": "쇠 금", "山": "메 산", "川": "시내 천", "江": "가람 강", "火": "불 화", "石": "돌 석",
         "土": "흙 토", "木": "나무 목", "手": "손 수", "生": "날 생", "子": "아들 자", "水": "물 수", "力": "힘 력", "車": "수레 차", "日": "날 일", "月": "달 월",
         "平": "평평할 평", "休": "쉴 휴", "出": "날 출", "大": "큰 대", "小": "작을 소", "上": "위 상", "下": "아래 하", "左": "왼 좌", "右": "오른 우", "東": "동녘 동",
         "西": "서녘 서", "南": "남녘 남", "北": "북녘 북", "長": "길 장", "短": "짧을 단", "多": "많을 다", "少": "적을 소", "高": "높을 고", "低": "낮을 저", "內": "안 내", 
-        "外": "바깥 외", "前": "앞 전", "後": "뒤 후", "中": "가운데 중", "間": "사이 간", "央": "가운데 앙", "天": "하늘 천", "地": "땅 지", "白": "흰 백", "米": "쌀 미",
+        "外": "바깥 외", "前": "앞 전", "후": "뒤 후", "中": "가운데 중", "間": "사이 간", "央": "가운데 앙", "天": "하늘 천", "地": "땅 지", "白": "흰 백", "米": "쌀 미",
         "赤": "붉을 적", "年": "해 년", "今": "이제 금", "半": "반 반", "口": "입 구", "主": "주인 주", "本": "근본 본", "夫": "지아비 부", "名": "이름 명", "足": "발 족",
         "入": "들 입", "門": "문 문", "校": "학교 교", "先": "먼저 선", "學": "배울 학", "女": "여자 녀", "男": "사내 남", "王": "임금 왕", "父": "아버지 부", "母": "어머니 모",
         "兄": "형 형", "弟": "아우 제", "室": "집 실", "姓": "성 성", "歲": "해 세", "雲": "구름 운", "靑": "푸를 청", "綠": "푸를 록", "物": "만물 물", "氣": "기운 기",
@@ -141,7 +141,7 @@
         const nameInput = document.getElementById('user-name-input').value.trim();
         if (!nameInput) { alert("이름을 입력해주세요!"); return; }
         currentUserName = nameInput;
-        const saved = localStorage.getItem('hanjaMaster_' + currentUserName);
+        const saved = localStorage.getItem('hanjaMaster_v2_' + currentUserName);
         userData = saved ? JSON.parse(saved) : { points: 0, cards: [], lastIdx: 0 };
         document.getElementById('login-page').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
@@ -161,7 +161,6 @@
         document.getElementById('progress-text').innerText = `${idx + 1} / 100`;
         document.getElementById('main-progress').style.width = (idx + 1) + "%";
 
-        // 뜻풀이 로직 보완
         const breakdownTable = document.getElementById('hanja-breakdown');
         breakdownTable.innerHTML = '';
         [...data.word].forEach(char => {
@@ -169,7 +168,6 @@
             breakdownTable.innerHTML += `<tr><td class="hanja-unit">${char}</td><td class="meaning-unit">${meaning}</td></tr>`;
         });
 
-        // 획순 초기화
         const container = document.getElementById('writer-container');
         container.innerHTML = '';
         writers = [];
@@ -179,18 +177,15 @@
             box.className = 'char-box';
             box.id = boxId;
             container.appendChild(box);
-            
-            // 한자가 아닌 경우(한글 등) 대비 예외 처리
             try {
                 const writer = HanziWriter.create(boxId, char, {
                     width: 80, height: 80, padding: 5, strokeColor: '#FF7F50'
                 });
                 writers.push(writer);
-            } catch(e) { console.error(char + "는 지원하지 않는 문자입니다."); }
+            } catch(e) { console.error(char + " 인식 불가"); }
         });
         setTimeout(() => playSequence(), 500);
 
-        // 퀴즈
         const qBox = document.getElementById('quiz-content');
         let wrongIdx = (idx + 7) % 100;
         const options = [data.desc, hanjaList[wrongIdx].desc].sort(() => Math.random() - 0.5);
@@ -199,7 +194,6 @@
             qBox.innerHTML += `<button class="quiz-option" onclick="checkQuiz(this, '${opt}' === '${data.desc}')">${opt}</button>`;
         });
 
-        // 쓰기 연습 버튼
         const drawBtns = document.getElementById('draw-buttons');
         drawBtns.innerHTML = '';
         [...data.word].forEach(char => {
@@ -220,22 +214,22 @@
             btn.style.background = "#c8e6c9";
             userData.points += 10;
             updateHeader();
-            alert("정답입니다! +10P");
+            alert("정답입니다! +10P ✨");
         } else {
             btn.style.background = "#ffcdd2";
-            alert("틀렸어요. 다시 해보세요!");
+            alert("다시 확인해 보세요! 🤔");
         }
     }
 
     function startDraw(char) {
         showPage('page2');
         document.getElementById('target-draw').innerHTML = '';
-        document.getElementById('quiz-guide').innerText = `"${char}"를 순서대로 쓰세요.`;
+        document.getElementById('quiz-guide').innerText = `"${char}"를 순서대로 써보세요!`;
         const dw = HanziWriter.create('target-draw', char, { 
             width: 220, height: 220, showCharacter: false, showHintAfterMisses: 1 
         });
         dw.quiz({ onComplete: () => { 
-            userData.points += 20; updateHeader(); alert("완벽해요! +20P"); showPage('page1'); 
+            userData.points += 20; updateHeader(); alert("참 잘했어요! +20P 👍"); showPage('page1'); 
         }});
     }
 
@@ -245,8 +239,8 @@
             userData.cards.push(word);
             userData.points += 50;
             updateHeader();
-            alert(`'${word}' 단어를 수집했습니다!`);
-        } else alert("이미 수집한 단어입니다.");
+            alert(`'${word}' 단어를 저장했습니다! +50P 🎒`);
+        } else alert("이미 저장된 단어입니다!");
     }
 
     function changeWord(n) {
@@ -260,7 +254,7 @@
     }
 
     function saveData() {
-        if(currentUserName) localStorage.setItem('hanjaMaster_' + currentUserName, JSON.stringify(userData));
+        if(currentUserName) localStorage.setItem('hanjaMaster_v2_' + currentUserName, JSON.stringify(userData));
     }
 
     function showPage(pId) {
@@ -272,16 +266,17 @@
     function renderCards() {
         const list = document.getElementById('collection-list');
         list.innerHTML = '';
-        if(userData.cards.length === 0) { list.innerHTML = '<p style="grid-column:1/3;">아직 수집한 단어가 없어요.</p>'; return; }
+        if(userData.cards.length === 0) { list.innerHTML = '<p style="grid-column:1/3;">수집한 단어가 없습니다.</p>'; return; }
         userData.cards.forEach(wordStr => {
             const data = hanjaList.find(i => i.word === wordStr);
             if(data) {
-                list.innerHTML += `<div class="card" style="padding:10px; margin:0;"><h3 style="margin:0;">${data.word}</h3><p style="margin:5px 0 0; font-size:0.8rem;">${data.desc}</p></div>`;
+                list.innerHTML += `<div class="card" style="padding:10px; margin:0; border:2px solid var(--secondary);"><h3 style="margin:0; color:var(--point-blue);">${data.word}</h3><p style="margin:5px 0 0; font-size:0.8rem;">${data.desc}</p></div>`;
             }
         });
     }
 </script>
 </body>
 </html>
+
 
 
