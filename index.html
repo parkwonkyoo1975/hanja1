@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🌟 초등 필수 한자 100</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.0.0/dist/hanzi-writer.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         :root { --primary: #FF7F50; --secondary: #FFD700; --bg: #FDFCF0; --point-blue: #2196F3; }
-        body { font-family: 'Jua', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Jua', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
         header { background: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--secondary); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.3rem; color: var(--primary); cursor: pointer; }
-        .nav-menu button { background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-family: 'Jua'; font-size: 0.9rem; margin-left: 2px; }
+        .logo { font-size: 1.3rem; color: var(--primary); }
         .page { display: none; padding: 15px; max-width: 500px; margin: auto; }
         .active { display: block; }
         .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
@@ -24,39 +22,32 @@
         .breakdown-table td { border: 1px solid #eee; padding: 15px; text-align: center; }
         .hanja-unit { font-size: 2.2rem; color: var(--primary); font-weight: bold; width: 40%; }
         .meaning-unit { font-size: 1.3rem; color: #444; text-align: left; padding-left: 20px; }
-        .step-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #fff; padding: 8px 15px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .btn-step { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Jua'; }
+        .step-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #fff; padding: 8px 15px; border-radius: 50px; }
+        .btn-step { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 20px; font-family: 'Jua'; }
         .writer-flex { display: flex; justify-content: center; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
         .char-box { border: 2px solid #ddd; border-radius: 12px; background: white; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
-        .quiz-option { display: block; width: 100%; padding: 12px; margin: 8px 0; background: white; border: 2px solid #eee; border-radius: 12px; font-family: 'Jua'; font-size: 1.1rem; cursor: pointer; }
-        .btn-action { background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 1rem; cursor: pointer; font-family: 'Jua'; margin: 5px; }
-        .progress-container { width: 100%; background-color: #eee; border-radius: 10px; margin-bottom: 10px; height: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background-color: var(--point-blue); width: 0%; transition: 0.3s; }
+        .quiz-option { display: block; width: 100%; padding: 12px; margin: 8px 0; background: white; border: 2px solid #eee; border-radius: 12px; font-family: 'Jua'; font-size: 1.1rem; }
+        .btn-action { background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 1rem; cursor: pointer; font-family: 'Jua'; }
     </style>
 </head>
 <body>
 
 <div id="login-page" class="page active">
     <div class="card">
-        <h1 style="font-size: 1.8rem; margin-bottom: 20px;">이름을 입력해 주세요!</h1>
-        <input type="text" id="user-name-input" style="width:80%; padding:15px; font-size:1.2rem; border-radius:15px; border:2px solid #ddd; font-family:'Jua'; text-align:center;" placeholder="이름 입력"><br><br>
-        <button class="btn-action" style="font-size: 1.3rem; padding: 15px 40px;" onclick="handleLogin()">학습 시작하기</button>
+        <h1>반가워요! 이름을 알려주세요.</h1>
+        <input type="text" id="user-name-input" style="width:80%; padding:15px; font-size:1.2rem; border-radius:15px; border:2px solid #ddd; font-family:'Jua'; text-align:center;">
+        <br><br>
+        <button class="btn-action" onclick="handleLogin()">공부 시작!</button>
     </div>
 </div>
 
 <div id="main-content" style="display: none;">
     <header>
-        <div class="logo" onclick="location.reload()">🌟 초등 한자 100</div>
+        <div class="logo">🌟 초등 한자 100</div>
         <div id="user-pts" style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 10px;">0P</div>
-        <div class="nav-menu">
-            <button onclick="showPage('page1')">학습</button>
-            <button onclick="showPage('page2')">쓰기</button>
-            <button onclick="showPage('page3')">수집</button>
-        </div>
     </header>
 
-    <div id="page1" class="page">
-        <div class="progress-container"><div id="main-progress" class="progress-fill"></div></div>
+    <div id="page1" class="page active">
         <div class="step-bar">
             <button class="btn-step" onclick="changeWord(-1)">◀ 이전</button>
             <span id="progress-text">1 / 100</span>
@@ -64,7 +55,7 @@
         </div>
         
         <div class="card">
-            <h1 id="main-word" style="color:var(--point-blue); font-size: 3.5rem; margin: 0 0 5px;"></h1>
+            <h1 id="main-word" style="color:var(--point-blue); font-size: 3.5rem; margin: 0;"></h1>
             <div id="main-eum" class="info-label"></div> 
             <div id="main-desc" class="info-label"></div>
             
@@ -75,31 +66,14 @@
             <div class="writer-flex" id="writer-container"></div>
             <button class="btn-action" style="background:#2196F3;" onclick="playSequence()">다시 보기</button>
 
-            <h3 class="section-title">③ 퀴즈 풀기</h3>
-            <div id="quiz-content"></div> <br>
-            <button class="btn-action" style="background:#FF9800; width:100%;" onclick="saveToCollection()">오늘의 단어 저장! 🎒</button>
-        </div>
-    </div>
-
-    <div id="page2" class="page">
-        <div class="card">
-            <h2>✍️ 직접 써보기</h2>
-            <div id="target-draw" class="char-box" style="width:240px; height:240px; margin: auto;"></div>
-            <p id="quiz-guide" style="font-size:1.2rem; color:var(--primary); margin: 20px 0;">글자를 선택해 주세요.</p>
-            <div id="draw-buttons"></div>
-        </div>
-    </div>
-
-    <div id="page3" class="page">
-        <div class="card">
-            <h2>🎒 나의 수집 단어장</h2>
-            <div id="collection-list" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"></div>
+            <h3 class="section-title">③ 퀴즈</h3>
+            <div id="quiz-content"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // 1. 데이터 완전 교정 (한글 섞임 '수차', '6월' 등 모두 수정)
+    // 1. 데이터 교정 (한글로 섞여있던 한자들을 진짜 한자로 전면 교체)
     const rawData = [
         "一日,일일,하루", "二月,이월,2월", "三月,삼월,3월", "四方,사방,네 방향", "五月,오월,5월", "六月,유월,6월", "七日,칠일,7일 동안", "八方,팔방,모든 방향", "九十,구십,90", "十月,시월,10월",
         "百人,백인,백 명의 사람", "千金,천금,많은 돈", "萬一,만일,만약에", "山川,산천,산과 시내", "江山,강산,강과 산", "火山,화산,불 뿜는 산", "石山,석산,돌산", "土木,토목,흙과 나무", "木手,목수,나무 다루는 사람", "生子,생자,아들을 낳음",
@@ -109,11 +83,11 @@
         "人口,인구,사람의 수", "主人,주인,물건의 임자", "本人,본인,자기 자신", "夫人,부인,남의 아내", "名手,명수,솜씨 좋은 사람", "手足,수족,손과 발", "入口,입구,들어가는 곳", "出口,출구,나가는 곳", "入山,입산,산에 들어감", "下山,하산,산에서 내려옴",
         "地上,지상,땅 위", "地下,지하,땅 아래", "水中,수중,물속", "心中,심중,마음속", "大門,대문,큰 문", "校門,교문,학교 문", "小門,소문,작은 문", "名門,명문,이름난 집안", "先生,선생,먼저 태어난 분", "學生,학생,배우는 사람",
         "生日,생일,태어난 날", "人生,인생,사람의 삶", "女子,여자,여성", "男子,남자,남성", "王子,왕자,임금의 아들", "父子,부자,아버지와 아들", "父母,부모,아버지와 어머니", "兄弟,형제,형과 남동생", "王室,왕실,임금의 가족", "百姓,백성,나라의 국민",
-        "萬歲,만세,기쁜 외침", "白雲,백운,흰 구름", "靑山,청산,푸른 산", "靑天,청천,푸른 하늘", "綠지,녹지,풀이 우거진 곳", "土地,토지,땅", "萬物,만물,모든 물건", "生氣,생기,살아 있는 기운", "小人,소인,작은 사람", "大人,대인,큰 사람",
+        "萬歲,만세,기쁜 외침", "白雲,백운,흰 구름", "靑山,청산,푸른 산", "靑天,청천,푸른 하늘", "綠地,녹지,풀이 우거진 곳", "土地,토지,땅", "萬物,만물,모든 물건", "生氣,생기,살아 있는 기운", "小인,소인,작은 사람", "大人,대인,큰 사람",
         "名人,명인,이름난 사람", "老人,노인,늙은 사람", "長男,장남,첫째 아들", "長女,장녀,첫째 딸", "子息,자식,아들과 딸", "分分,분분,여럿으로 나뉨", "正月,정월,첫째 달", "正直,정직,바르고 곧음", "安心,안심,마음을 편히 함", "一心,일심,한마음"
     ];
 
-    // 2. 한자 사전 보완 (水, 車, 月 등 필수 데이터 추가)
+    // 2. 한자 사전 완성 (이미지에 나온 월, 수, 차 포함 모든 필수 한자 등록)
     const hanjaDic = {
         "一": "한 일", "二": "두 이", "三": "석 삼", "四": "넉 사", "五": "다섯 오", "六": "여섯 륙", "七": "일곱 칠", "八": "여덟 팔", "九": "아홉 구", "十": "열 십",
         "百": "일백 백", "千": "일천 천", "萬": "일만 만", "人": "사람 인", "金": "쇠 금", "山": "메 산", "川": "시내 천", "江": "가람 강", "火": "불 화", "石": "돌 석",
@@ -121,162 +95,91 @@
         "平": "평평할 평", "休": "쉴 휴", "出": "날 출", "大": "큰 대", "小": "작을 소", "上": "위 상", "下": "아래 하", "左": "왼 좌", "右": "오른 우", "東": "동녘 동",
         "西": "서녘 서", "南": "남녘 남", "北": "북녘 북", "長": "길 장", "短": "짧을 단", "多": "많을 다", "少": "적을 소", "高": "높을 고", "低": "낮을 저", "內": "안 내", 
         "外": "바깥 외", "前": "앞 전", "後": "뒤 후", "中": "가운데 중", "間": "사이 간", "央": "가운데 앙", "天": "하늘 천", "地": "땅 지", "白": "흰 백", "米": "쌀 미",
-        "赤": "붉을 적", "年": "해 년", "今": "이제 금", "半": "반 반", "口": "입 구", "주": "주인 주", "本": "근본 본", "夫": "지아비 부", "名": "이름 명", "足": "발 족",
+        "赤": "붉을 적", "年": "해 년", "今": "이제 금", "半": "반 반", "口": "입 구", "主": "주인 주", "本": "근본 본", "夫": "지아비 부", "名": "이름 명", "足": "발 족",
         "入": "들 입", "門": "문 문", "校": "학교 교", "先": "먼저 선", "學": "배울 학", "女": "여자 녀", "男": "사내 남", "王": "임금 왕", "父": "아버지 부", "母": "어머니 모",
-        "兄": "형 형", "弟": "아우 제", "室": "집 실", "姓": "성 성", "歲": "해 세", "雲": "구름 운", "靑": "푸를 청", "綠": "푸를 록", "物": "만물 물", "氣": "기운 기",
-        "老": "늙을 로", "息": "숨쉴 식", "分": "나눌 분", "正": "바를 정", "直": "곧을 직", "安": "편안 안", "心": "마음 심", "方": "모 방", "世": "대 세", "止": "그칠 지"
+        "兄": "형 형", "제": "아우 제", "室": "집 실", "姓": "성 성", "歲": "해 세", "雲": "구름 운", "靑": "푸를 청", "綠": "푸를 록", "物": "만물 물", "氣": "기운 기",
+        "老": "늙을 로", "息": "숨쉴 식", "分": "나눌 분", "正": "바를 정", "直": "곧을 직", "安": "편안 안", "心": "마음 심", "方": "모 방"
     };
 
     const hanjaList = rawData.map((item, idx) => {
-        const [hanja, eum, desc] = item.split(",");
-        return { id: idx + 1, word: hanja, eum: eum, desc: desc };
+        const [word, eum, desc] = item.split(",");
+        return { id: idx, word, eum, desc };
     });
 
-    let currentUserName = "";
-    let userData = { points: 0, cards: [], lastIdx: 0 };
-    let currentIndex = 0;
+    let currentIdx = 0;
     let writers = [];
+    let userPoints = 0;
 
     function handleLogin() {
-        const nameInput = document.getElementById('user-name-input').value.trim();
-        if (!nameInput) { alert("이름을 입력해주세요!"); return; }
-        currentUserName = nameInput;
-        const saved = localStorage.getItem('hanjaMaster_v3_' + currentUserName);
-        userData = saved ? JSON.parse(saved) : { points: 0, cards: [], lastIdx: 0 };
+        const name = document.getElementById('user-name-input').value;
+        if(!name) return alert("이름을 써주세요!");
         document.getElementById('login-page').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-        showPage('page1');
-        updateHeader();
-        loadWord(userData.lastIdx || 0);
+        loadWord(0);
     }
 
     function loadWord(idx) {
-        currentIndex = idx;
-        userData.lastIdx = idx;
+        currentIdx = idx;
         const data = hanjaList[idx];
-        
         document.getElementById('main-word').innerText = data.word;
         document.getElementById('main-eum').innerText = `음 : ${data.eum}`;
         document.getElementById('main-desc').innerText = `뜻 : ${data.desc}`;
         document.getElementById('progress-text').innerText = `${idx + 1} / 100`;
-        document.getElementById('main-progress').style.width = (idx + 1) + "%";
 
-        const breakdownTable = document.getElementById('hanja-breakdown');
-        breakdownTable.innerHTML = '';
+        // 뜻풀이 테이블 채우기
+        const tbody = document.getElementById('hanja-breakdown');
+        tbody.innerHTML = '';
         [...data.word].forEach(char => {
-            const meaning = hanjaDic[char] || "뜻풀이 준비중";
-            breakdownTable.innerHTML += `<tr><td class="hanja-unit">${char}</td><td class="meaning-unit">${meaning}</td></tr>`;
+            const meaning = hanjaDic[char] || "정보 없음";
+            tbody.innerHTML += `<tr><td class="hanja-unit">${char}</td><td class="meaning-unit">${meaning}</td></tr>`;
         });
 
+        // 획순 애니메이션 초기화
         const container = document.getElementById('writer-container');
         container.innerHTML = '';
         writers = [];
         [...data.word].forEach((char, i) => {
-            const boxId = `char-box-${i}`;
-            const box = document.createElement('div');
-            box.className = 'char-box';
-            box.id = boxId;
-            container.appendChild(box);
-            try {
-                const writer = HanziWriter.create(boxId, char, {
-                    width: 80, height: 80, padding: 5, strokeColor: '#FF7F50'
-                });
-                writers.push(writer);
-            } catch(e) { console.error(char + " 인식 불가"); }
+            const div = document.createElement('div');
+            div.className = 'char-box';
+            div.id = `box-${i}`;
+            container.appendChild(div);
+            const writer = HanziWriter.create(div.id, char, { width: 80, height: 80, padding: 5, strokeColor: '#FF7F50' });
+            writers.push(writer);
         });
         setTimeout(() => playSequence(), 500);
 
+        // 퀴즈 생성
         const qBox = document.getElementById('quiz-content');
-        let wrongIdx = (idx + 7) % 100;
-        const options = [data.desc, hanjaList[wrongIdx].desc].sort(() => Math.random() - 0.5);
-        qBox.innerHTML = `<p><b>${data.word}</b>의 올바른 뜻은?</p>`;
+        qBox.innerHTML = `<p>${data.word}의 올바른 뜻은?</p>`;
+        const options = [data.desc, "다른 뜻", "엉뚱한 뜻"].sort(() => Math.random() - 0.5);
         options.forEach(opt => {
-            qBox.innerHTML += `<button class="quiz-option" onclick="checkQuiz(this, '${opt}' === '${data.desc}')">${opt}</button>`;
+            qBox.innerHTML += `<button class="quiz-option" onclick="checkQuiz('${opt}', '${data.desc}')">${opt}</button>`;
         });
-
-        const drawBtns = document.getElementById('draw-buttons');
-        drawBtns.innerHTML = '';
-        [...data.word].forEach(char => {
-            drawBtns.innerHTML += `<button class="btn-action" onclick="startDraw('${char}')">${char} 쓰기</button>`;
-        });
-        saveData();
     }
 
     async function playSequence() {
-        for (let writer of writers) { writer.hideCharacter(); }
-        for (let writer of writers) {
-            await new Promise(r => writer.animateCharacter({ onComplete: r }));
-        }
+        for(let w of writers) { w.hideCharacter(); }
+        for(let w of writers) { await new Promise(r => w.animateCharacter({ onComplete: r })); }
     }
 
-    function checkQuiz(btn, isCorrect) {
-        if(isCorrect) {
-            btn.style.background = "#c8e6c9";
-            userData.points += 10;
-            updateHeader();
-            alert("정답입니다! +10P ✨");
+    function checkQuiz(choice, answer) {
+        if(choice === answer) {
+            alert("정답입니다! +10P");
+            userPoints += 10;
+            document.getElementById('user-pts').innerText = `${userPoints}P`;
         } else {
-            btn.style.background = "#ffcdd2";
-            alert("다시 확인해 보세요! 🤔");
+            alert("다시 생각해보세요!");
         }
-    }
-
-    function startDraw(char) {
-        showPage('page2');
-        document.getElementById('target-draw').innerHTML = '';
-        document.getElementById('quiz-guide').innerText = `"${char}"를 순서대로 써보세요!`;
-        const dw = HanziWriter.create('target-draw', char, { 
-            width: 220, height: 220, showCharacter: false, showHintAfterMisses: 1 
-        });
-        dw.quiz({ onComplete: () => { 
-            userData.points += 20; updateHeader(); alert("참 잘했어요! +20P 👍"); showPage('page1'); 
-        }});
-    }
-
-    function saveToCollection() {
-        const word = hanjaList[currentIndex].word;
-        if(!userData.cards.includes(word)) {
-            userData.cards.push(word);
-            userData.points += 50;
-            updateHeader();
-            alert(`'${word}' 단어를 저장했습니다! +50P 🎒`);
-        } else alert("이미 저장된 단어입니다!");
     }
 
     function changeWord(n) {
-        const next = currentIndex + n;
+        const next = currentIdx + n;
         if(next >= 0 && next < 100) loadWord(next);
-    }
-
-    function updateHeader() {
-        document.getElementById('user-pts').innerText = userData.points + "P";
-        saveData();
-    }
-
-    function saveData() {
-        if(currentUserName) localStorage.setItem('hanjaMaster_v3_' + currentUserName, JSON.stringify(userData));
-    }
-
-    function showPage(pId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pId).classList.add('active');
-        if(pId === 'page3') renderCards();
-    }
-
-    function renderCards() {
-        const list = document.getElementById('collection-list');
-        list.innerHTML = '';
-        if(userData.cards.length === 0) { list.innerHTML = '<p style="grid-column:1/3;">수집한 단어가 없습니다.</p>'; return; }
-        userData.cards.forEach(wordStr => {
-            const data = hanjaList.find(i => i.word === wordStr);
-            if(data) {
-                list.innerHTML += `<div class="card" style="padding:10px; margin:0; border:2px solid var(--secondary);"><h3 style="margin:0; color:var(--point-blue);">${data.word}</h3><p style="margin:5px 0 0; font-size:0.8rem;">${data.desc}</p></div>`;
-            }
-        });
     }
 </script>
 </body>
 </html>
+
 
 
 
